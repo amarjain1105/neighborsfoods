@@ -1,0 +1,35 @@
+<ion-header><page-header [header]="header_data"></page-header></ion-header>
+<ion-content>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+      <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+ 
+  <ion-list>
+    <ion-item *ngFor="let p of list">
+      <ion-row>
+          <div class="col-xs-12 col-sm-2 col-md-2">
+            <img height="70em"  width="100em" src="/assets/imgs/chapati.jpg" class="img-responsive img-box img-thumbnail"> 
+          </div> 
+          <div class="col-xs-12 col-sm-9 col-md-9">
+            <ion-row style="text-decoration:none !important">
+              <ion-col class="col-xs-12 col-sm-9 col-md-9">
+                <div>
+                  <h4 style="font-weight:bolder">sintret | <span style="color: green">online</span></h4>
+                </div>
+                <div style="width: 1em;">
+                  <small >North Indian, South Indian</small>
+                </div>
+                <div>
+                  <small>xyz</small>
+                </div>          
+              </ion-col>
+            </ion-row>
+          </div>
+        </ion-row>
+      </ion-item>
+  </ion-list>
+</ion-content>
+
+
+
+

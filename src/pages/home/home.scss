@@ -1,0 +1,19 @@
+page-home {
+    .container {
+        position: relative;
+        font-family: Arial;
+    }
+    
+    .text-block {
+        position: absolute;
+        bottom: 10px;
+        background-color: #FF6347;
+        color: white;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+}
+.img-container{
+    height:150px;
+    background:#afafaf;
+}

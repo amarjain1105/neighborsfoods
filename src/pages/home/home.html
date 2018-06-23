@@ -1,0 +1,22 @@
+<ion-header><page-header [header]="header_data"></page-header></ion-header>
+<ion-content>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+      <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-row *ngFor="let p of list">
+    <ion-col>
+      <ion-card style="margin: 0px; width: 100%; border-radius:10px" type="button" (click)="seller(p)">
+        <div class="container">
+          <img src="assets/imgs/img_nature_wide.jpg" class="img-container" alt="Nature" style="width:100%;">
+          <div class="text-block">
+            <p>What a beautiful sunrise</p>
+          </div>
+        </div>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+</ion-content>
+
+
+
+
