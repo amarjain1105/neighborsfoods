@@ -309,7 +309,7 @@
   }
   
   // style for auth pages
-  .auth-page {
+ .auth-page {
     background-color: #fff;
     &::after {
       content: "";
@@ -324,13 +324,10 @@
     }
   
     .scroll-content {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      //background: rgba(50, 10, 92, .4);
+      
   
       .login-content {
-        width: 86%;
+        width: auto;
   
         .list-form {
           padding: 0;

@@ -13,7 +13,7 @@ export class LoginPage {
   email:string;
   password:string;
   constructor(public nav: NavController, public alertCtrl: AlertController, public toastCtrl: ToastController,
-   private mservice: LoginService) {
+    public mservice: LoginService) {
     this.header_data={ismenu:true,ishome:false,title:"Login",hideIcon:false};
   }
 
@@ -86,15 +86,29 @@ export class LoginPage {
           text: 'Send',
           handler: data => {
             console.log('Send clicked');
-            let toast = this.toastCtrl.create({
-              message: 'Email was sended successfully',
-              duration: 3000,
-              position: 'top',
-              cssClass: 'dark-trans',
-              closeButtonText: 'OK',
-              showCloseButton: true
+           var error_message="";
+            this.mservice.getforgotpassword(data.email).subscribe((response:any)=>
+            {
+              if(response.status)
+              {
+                error_message = response.message; 
+              }
+              else
+              {
+                error_message = response.message;
+              }
+
+              let toast = this.toastCtrl.create({
+                message: error_message,
+                duration: 3000,
+                position: 'bottom',
+                cssClass: 'dark-trans',
+                closeButtonText: 'OK',
+                showCloseButton: true
+              });
+              toast.present();
             });
-            toast.present();
+            
           }
         }
       ]

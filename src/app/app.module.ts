@@ -22,6 +22,8 @@ import { SellerPage } from '../pages/sellers/seller';
 import { SellerProductPage } from '../pages/sellersproduct/sellersproduct';
 import { HeaderPage } from '../pages/header/header';
 import { CartPage } from '../pages/cart/cart';
+import { HomeService } from '../pages/home/homeServics';
+import { SellerService } from '../pages/sellers/sellerService';
 
 @NgModule({
   declarations: [
@@ -60,6 +62,8 @@ import { CartPage } from '../pages/cart/cart';
     LoginService,
     RegisterService,
     ApiService,
+    HomeService,
+    SellerService,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

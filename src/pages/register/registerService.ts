@@ -5,8 +5,9 @@ import 'rxjs/Rx';
 export class RegisterService 
 {
     constructor(private apiService: ApiService) {}
-    getRegister()
+    getRegister(remail,rpassword,rmob ,rfullname)
     {
-        return this.apiService.post('/neighborsfood_app_server/registration',{});
+        return this.apiService.post('/registration.php',{action:"registration",name:rfullname,email:remail
+    ,mblno:rmob,password:rpassword});
     }
 }

@@ -3,13 +3,13 @@
   <ion-refresher (ionRefresh)="doRefresh($event)">
       <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-  <ion-row *ngFor="let p of list">
+  <ion-row *ngFor="let item of category_item">
     <ion-col>
-      <ion-card style="margin: 0px; width: 100%; border-radius:10px" type="button" (click)="seller(p)">
+      <ion-card style="margin: 0px; width: 100%; border-radius:10px" type="button" (click)="seller(item)">
         <div class="container">
-          <img src="assets/imgs/img_nature_wide.jpg" class="img-container" alt="Nature" style="width:100%;">
+          <img src="{{api_url}}/{{item.target}}/{{item.cat_image}}" class="img-container" alt="Nature" style="width:100%;">
           <div class="text-block">
-            <p>What a beautiful sunrise</p>
+            <p>{{item.cat_name}}</p>
           </div>
         </div>
       </ion-card>

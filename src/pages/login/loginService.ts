@@ -7,6 +7,10 @@ export class LoginService
     constructor(private apiService: ApiService) {}
     getLogin(email,password)
     {
-        return this.apiService.post('/neighborsfood_app_server/login.php',{action:"login",email:email,password:password});
+        return this.apiService.post('/login.php',{action:"login",email:email,password:password});
+    }
+    getforgotpassword(email)
+    {
+        return this.apiService.post('/forgetpassword.php',{action:"forgetpassword",email:email});
     }
 }
