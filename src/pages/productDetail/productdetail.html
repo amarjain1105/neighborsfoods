@@ -1,0 +1,53 @@
+<ion-header color="primary">
+  <ion-navbar>
+      <ion-title>Product Detail</ion-title>
+      <ion-buttons end>
+      <button ion-button (click)="closeModal()">Close</button>
+      </ion-buttons>
+    </ion-navbar>
+  </ion-header>
+
+  
+  <ion-content class="common-bg">
+    <img height="40%" width="100%"  src="{{api_url}}/{{model.target}}/{{model.p_image}}" class="img-responsive img-box img-thumbnail"> 
+    <!--services-->
+    <ion-grid class="border-bottom dark-bg">
+      <ion-row>
+        <ion-col text-center>
+          <div class="text-sm">
+            <div>
+              <ion-icon name="" class="text-white"></ion-icon>
+              <span ion-text color="light">{{ model.p_price }}</span>
+              <ion-icon name="checkbox-outline" margin-left class="text-white" ></ion-icon>
+              <span ion-text color="light">{{ model.p_name }}</span>
+              <ion-icon name="list-box" margin-left class="text-white"></ion-icon>
+              <span ion-text color="light" >{{model.p_type_of_food}}</span>
+            </div>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  
+    <!--booking form-->
+    <div class="booking-form card round" margin>
+      <div class="border-bottom" padding>
+          <span ion-text color="primary" class="bold">DESCRIPTION</span>
+      </div>
+      <div padding class="form-bottom">
+          <span>{{model.p_description}}</span>
+      </div>
+    </div>
+  
+    <!--description-->
+    <!-- <div class="border-bottom" padding>
+      
+      <p ion-text>trip.description</p>
+    </div> -->
+  
+    <!--address-->
+    <div class="border-bottom" padding>
+      <span ion-text color="primary" class="bold">LOCATION</span>
+      <p ion-text>Address</p>
+    </div>
+  </ion-content>
+  

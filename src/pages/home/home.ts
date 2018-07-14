@@ -4,7 +4,9 @@ import { SellerPage } from '../sellers/seller';
 import { HomeModel } from './homemodel';
 import { HomeService } from './homeServics';
 import { URL_BASE } from '../api/config';
-
+import { LoadingController } from 'ionic-angular/components/loading/loading-controller';
+import { Network } from '@ionic-native/network';
+import { SellerProductPage } from '../sellersproduct/sellersproduct';
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -13,16 +15,24 @@ export class HomePage {
   header_data:any;
   api_url: string = URL_BASE;
   category_item: Object[] = []
-  constructor(public navCtrl: NavController, public mservisecat: HomeService) 
+  loading;
+  refresher;
+  constructor(public navCtrl: NavController, public mservisecat: HomeService, public loadingCtrl:LoadingController, 
+    public network: Network) 
   {
-    this.header_data            = {ismenu:true,ishome:false,title:"Home",hideIcon:false};
-    this.getdata();
+    this.header_data            = {ismenu:true,ishome:false,title:"Home",hideIcon:false, 
+                                    itemsInCart:localStorage.getItem('cartlength')};
+
   }
 
   getdata()
   {
+    this.ShowLoader();
     this.mservisecat.getcategory().subscribe((response:any) =>
     {
+      this.HideLoader();
+      if(this.refresher != undefined)
+        this.refresher.complete();
       if(response.status)
       {
         var modelArray            = new Array<HomeModel>();
@@ -37,20 +47,58 @@ export class HomePage {
         }
         this.category_item        = modelArray;
       }
+      else
+      {
+
+      }
     });
   }
 
   seller(data)
   {
-    this.navCtrl.push(SellerPage, {
+    this.navCtrl.push(SellerProductPage, {
       param1: data.cat_id
   });
   }
   doRefresh(refresher) 
   {
     this.getdata();
-    setTimeout(() => {      
-      refresher.complete();
-    }, 2000);
+    this.refresher = refresher;
+  }
+
+  ionViewDidEnter() 
+  {
+    // check internet connection start
+    this.network.onConnect().subscribe(data => {
+      alert("internet");
+      this.getdata();
+      console.log(data.type)
+    }, error => console.error(error));
+   
+    this.network.onDisconnect().subscribe(data => {
+      alert("onDisconnect");
+      console.log(data.type)
+    }, error => console.error(error));
+    // check internet connection end
+  }
+  // Page back
+  ionViewCanEnter()
+  {
+    this.header_data            = {ismenu:true,ishome:false,title:"Home",hideIcon:false, 
+                                    itemsInCart:localStorage.getItem('cartlength')};
+    this.getdata();
+  }
+
+  ShowLoader() 
+  {
+      this.loading = this.loadingCtrl.create({
+      content: 'Please wait...'
+      });
+      this.loading.present();
+  }
+
+  HideLoader()
+  {
+      this.loading.dismiss();
   }
 }

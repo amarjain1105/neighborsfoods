@@ -6,12 +6,11 @@
     <button ion-button icon-only>
         <ion-icon name="refresh"></ion-icon>
     </button>
-    <button ion-button icon-only>
-        <ion-icon name="funnel"></ion-icon>
+    <button (click)="clickCart(itemsInCart)" ion-button icon-only>
+        <ion-badge *ngIf="header.itemsInCart != '0'" >{{header.itemsInCart}}</ion-badge>
+        <ion-icon name="cart"></ion-icon>
     </button>
-    <button ion-button icon-only [navPush]="aboutPage">
-        <ion-icon name="contact"></ion-icon>
-        </button>
     </ion-buttons>
+    
     <ion-title>{{header.title}}</ion-title>
 </ion-navbar>

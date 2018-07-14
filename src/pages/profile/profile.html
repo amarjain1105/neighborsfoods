@@ -1,4 +1,3 @@
-<!-- -->
 <ion-header><page-header [header]="header_data"></page-header></ion-header>
 <ion-content padding class="animated fadeIn login auth-page">
   <div class="login-content">
@@ -10,38 +9,31 @@
     <ion-list>
       <ion-item>
         <ion-label floating>
+          <ion-icon name="lock" item-start class="text-primary"></ion-icon>
+          Name
+        </ion-label>
+        <ion-input type="text" [(ngModel)]="name" [disabled]="true"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>
           <ion-icon name="mail" item-start class="text-primary"></ion-icon>
           Email
         </ion-label>
-        <ion-input type="email" [(ngModel)]="email"></ion-input>
+        <ion-input type="email" [(ngModel)]="username" [disabled]="true"></ion-input>
       </ion-item>
-
       <ion-item>
         <ion-label floating>
           <ion-icon name="lock" item-start class="text-primary"></ion-icon>
-          Password
+          Mobile
         </ion-label>
-        <ion-input type="password" [(ngModel)]="password"></ion-input>
+        <ion-input type="text" [(ngModel)]="mobile"></ion-input>
       </ion-item>
     </ion-list>
-
-    <p text-right ion-text color="secondary" tappable (click)="forgotPass()"><strong>Forgot Password?</strong></p>
-
     <div>
-      <button ion-button icon-start block color="dark" tappable (click)="login()">
+      <button ion-button icon-start block color="dark" tappable (click)="updateProfile()">
         <ion-icon name="log-in"></ion-icon>
-        SIGN IN
+        Update Profile
       </button>
-
-      <p text-center ion-text color="secondary">Or Sign in with:</p>
-
     </div>
-
-
-    <!-- Other links -->
-    <div text-center margin-top>
-      <span ion-text color="secondary" tappable (click)="register()">New here? <strong>Sign up</strong></span>
-    </div>
-
   </div>
 </ion-content>

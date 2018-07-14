@@ -1,5 +1,11 @@
 import { ToastController } from "ionic-angular/components/toast/toast-controller";
-export class Toast {
+import { Component } from "@angular/core/src/metadata/directives";
+
+@Component({
+    selector: 'page-toast',
+    templateUrl: 'toast.html'
+  })
+export class ToastPage {
 
     constructor(public toastCtrl: ToastController) 
     {

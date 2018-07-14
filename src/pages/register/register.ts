@@ -4,6 +4,7 @@ import {LoginPage} from "../login/login";
 import {HomePage} from "../home/home";
 import { RegisterService } from "./registerService";
 import { ToastController } from "ionic-angular/components/toast/toast-controller";
+import { LoadingController } from "ionic-angular/components/loading/loading-controller";
 
 @Component({
   selector: 'page-register',
@@ -16,7 +17,9 @@ export class RegisterPage {
   rpassword:string;
   rmob:number;
   rfullname:string;
-  constructor(public nav: NavController,public toastCtrl: ToastController,private mservice: RegisterService) 
+  loading;
+  constructor(public nav: NavController,public toastCtrl: ToastController,private mservice: RegisterService,
+    public loadingCtrl: LoadingController) 
   {
     this.header_data={ismenu:true,ishome:false,title:"Registration",hideIcon:false};
   }
@@ -38,24 +41,40 @@ export class RegisterPage {
     }
     else
     {
-    this.mservice.getRegister(this.remail,this.rpassword,this.rmob ,this.rfullname).subscribe((response:any) =>
-    {
-      console.log(response);
-      if(response.status)
+      this.ShowLoader();
+      this.mservice.getRegister(this.remail,this.rpassword,this.rmob ,this.rfullname).subscribe((response:any) =>
       {
-        alert(response.message);
-      }
-      else
-      {
-        alert(response.message);
-      }
-    });
-  }
+        this.HideLoader();
+        console.log(response);
+        if(response.status)
+        {
+          alert(response.message);
+          this.nav.setRoot(LoginPage);
+        }
+        else
+        {
+          alert(response.message);
+        }
+      });
+    }
   }
 
   // go to login page
   login() 
   {
     this.nav.setRoot(LoginPage);
+  }
+
+  ShowLoader() 
+  {
+      this.loading = this.loadingCtrl.create({
+      content: 'Please wait...'
+      });
+      this.loading.present();
+  }
+
+  HideLoader()
+  {
+      this.loading.dismiss();
   }
 }

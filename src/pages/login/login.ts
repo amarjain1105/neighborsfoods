@@ -3,6 +3,8 @@ import {NavController, AlertController, ToastController, MenuController} from "i
 import {HomePage} from "../home/home";
 import {RegisterPage} from "../register/register";
 import { LoginService } from "./loginService";
+import { Events } from "ionic-angular/util/events";
+import { LoadingController } from "ionic-angular/components/loading/loading-controller";
 
 @Component({
   selector: 'page-login',
@@ -12,9 +14,11 @@ export class LoginPage {
   header_data:any;
   email:string;
   password:string;
+  loading;
   constructor(public nav: NavController, public alertCtrl: AlertController, public toastCtrl: ToastController,
-    public mservice: LoginService) {
+    public mservice: LoginService, public events: Events, public loadingCtrl: LoadingController) {
     this.header_data={ismenu:true,ishome:false,title:"Login",hideIcon:false};
+  
   }
 
   // go to register page
@@ -48,20 +52,30 @@ export class LoginPage {
       });
       toast.present();
     }
-    else{
-    this.mservice.getLogin(this.email,this.password).subscribe((response:any) =>
+    else
     {
-      console.log(response);
-      if(response.status)
+      this.ShowLoader();
+      this.mservice.getLogin(this.email,this.password).subscribe((response:any) =>
       {
-        alert(response.message);
-      }
-      else
-      {
-        alert(response.message);
-      }
-    });
-  }
+        this.HideLoader();
+        if(response.status)
+        {
+          console.log(response.data)
+          console.log(JSON.stringify(response.data))
+          localStorage.setItem("logindata", JSON.stringify(response.data));
+          localStorage.setItem("name", response.data.name);
+          localStorage.setItem("username", response.data.username);
+          localStorage.setItem("mobile", response.data.mobile);
+          localStorage.setItem("u_id", response.data.id);
+          this.events.publish('user:login', response.data);
+          this.nav.setRoot(HomePage);
+        }
+        else
+        {
+          alert(response.message);
+        }
+      });
+    }
   }
 
   forgotPass() {
@@ -114,6 +128,19 @@ export class LoginPage {
       ]
     });
     forgot.present();
+  }
+
+  ShowLoader() 
+  {
+      this.loading = this.loadingCtrl.create({
+      content: 'Please wait...'
+      });
+      this.loading.present();
+  }
+
+  HideLoader()
+  {
+      this.loading.dismiss();
   }
 
 }

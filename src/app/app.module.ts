@@ -24,7 +24,10 @@ import { HeaderPage } from '../pages/header/header';
 import { CartPage } from '../pages/cart/cart';
 import { HomeService } from '../pages/home/homeServics';
 import { SellerService } from '../pages/sellers/sellerService';
-
+import { Network } from '@ionic-native/network';
+import { SellerProductService } from '../pages/sellersproduct/SellerproductSevice';
+import { ProductDetailPage } from '../pages/productDetail/productdetail';
+import { ProfilePage } from '../pages/profile/profile';
 @NgModule({
   declarations: [
     MyApp,
@@ -34,7 +37,9 @@ import { SellerService } from '../pages/sellers/sellerService';
     SellerPage,
     SellerProductPage,
     HeaderPage,
-    CartPage
+    ProductDetailPage,
+    CartPage,
+    ProfilePage
   ],
   imports: [
     BrowserModule,
@@ -54,7 +59,9 @@ import { SellerService } from '../pages/sellers/sellerService';
     SellerPage,
     SellerProductPage,
     HeaderPage,
-    CartPage
+    ProductDetailPage,
+    CartPage,
+    ProfilePage
   ],
   providers: [
     StatusBar,
@@ -64,6 +71,8 @@ import { SellerService } from '../pages/sellers/sellerService';
     ApiService,
     HomeService,
     SellerService,
+    Network,
+    SellerProductService,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

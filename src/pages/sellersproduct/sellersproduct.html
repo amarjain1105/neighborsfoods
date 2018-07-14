@@ -5,29 +5,41 @@
   </ion-refresher>
  
   <ion-list>
-    <ion-item *ngFor="let p of list">
+    <ion-item *ngFor="let item of sellerproductList; let i = index">
       <ion-row>
-          <div class="col-xs-12 col-sm-2 col-md-2">
-            <img height="70em"  width="100em" src="/assets/imgs/chapati.jpg" class="img-responsive img-box img-thumbnail"> 
+          <div class="col-xs-12 col-sm-2 col-md-2" (click)="productdetail(item)">
+              <img height="90em"  width="100em"  src="{{api_url}}/{{item.target}}/{{item.p_image}}" class="img-responsive img-box img-thumbnail"> 
           </div> 
           <div class="col-xs-12 col-sm-9 col-md-9">
             <ion-row style="text-decoration:none !important">
               <ion-col class="col-xs-12 col-sm-9 col-md-9">
                 <div>
-                  <h4 style="font-weight:bolder">sintret | <span style="color: green">online</span></h4>
+                  <h4 style="font-weight:bolder">{{item.p_name}} | <span *ngIf="item.p_status == 'active'" style="color: green">online</span><span *ngIf="item.p_status == 'deactive'" style="color: red">offline</span></h4>
                 </div>
                 <div style="width: 1em;">
-                  <small >North Indian, South Indian</small>
+                  <small >{{item.p_type_of_food}}</small>
                 </div>
-                <div>
-                  <small>xyz</small>
-                </div>          
               </ion-col>
             </ion-row>
+            <div>
+              <button style="width: 1em; height: 2em" [hidden] = item.flag (click)="addToCart(item, i)" ion-button icon-left>
+                <ion-icon name="cart"></ion-icon>
+              </button>
+              <button style="width: 1em; height: 2em" [hidden] = !item.flag (click)="addcount(item)" ion-button icon-left>
+                <ion-icon name="add"></ion-icon>
+              </button>
+              <button style="width: 1em; height: 2em" *ngIf="item.quantityInCart" color="light" ion-button>
+                {{item.quantityInCart}}
+              </button>
+              <button style="width: 1em; height: 2em" [hidden] = !item.flag (click)="removecount(item, i)" ion-button icon-left>
+                <ion-icon name="remove"></ion-icon>
+              </button>
+            </div>
           </div>
         </ion-row>
       </ion-item>
   </ion-list>
+  
 </ion-content>
 
 

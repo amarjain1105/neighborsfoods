@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { ApiService } from '../api/api';
 import 'rxjs/Rx';
 @Injectable()
-export class SellerService 
+export class SellerProductService 
 {
     constructor(private apiService: ApiService) {}
-    getSellerList()
+    getSellerProductList(cat_id)
     {
-        return this.apiService.post('/sellers.php',{action:"sellers"});
+        return this.apiService.post('/sellersproduct.php',{action:"sellersproduct",cat_id:cat_id});
     }
 }

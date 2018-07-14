@@ -13,4 +13,9 @@ export class LoginService
     {
         return this.apiService.post('/forgetpassword.php',{action:"forgetpassword",email:email});
     }
+    getUpdateProfile(mobile)
+    {
+        var u_id = localStorage.getItem('u_id');
+        return this.apiService.post('/updateprofile.php',{action:"updateprofile",mobile:mobile, u_id:u_id});
+    }
 }
