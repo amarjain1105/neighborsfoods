@@ -61,9 +61,13 @@ public mservice:SellerProductService, public loadingCtrl: LoadingController)
   {
     this.header_data            = {ismenu:true,ishome:false,title:"Product",hideIcon:false, 
                                     itemsInCart:localStorage.getItem('cartlength')};
-    this.cat_id = navParams.get('param1');
+      this.cat_id = navParams.get('param1');
   }
-
+  ionViewDidLoad() 
+  {
+    
+    //console.log(this.itemsInCart)
+  }
 
   getdata(cat_id)
   { 
@@ -94,10 +98,25 @@ public mservice:SellerProductService, public loadingCtrl: LoadingController)
             model.day               = response.data[i]['day'];
             model.time              = response.data[i]['time'];
             model.target            = response.data[i]['target'];
-
+            model.quantityInCart    = 0;
+            model.flag              = false;
             modelArray.push(model);
         }
         this.sellerproductList = modelArray;
+      }
+      this.itemsInCart = JSON.parse(localStorage.getItem('cartitem'));
+      console.log(this.itemsInCart);
+      for(var i=0; i<this.itemsInCart.length; i++)
+      {
+        for(var j=0; j<modelArray.length;j++)
+        {
+          if(this.itemsInCart[i]['p_code'] == modelArray[j]['p_code'])
+          {
+            console.log(modelArray[j]['p_code'])
+            modelArray[j]['quantityInCart'] = this.itemsInCart[i]['quantityInCart']
+            modelArray[j]['flag'] = true;
+          }
+        }
       }
     });
   }
@@ -112,6 +131,7 @@ public mservice:SellerProductService, public loadingCtrl: LoadingController)
     this.header_data            = {ismenu:true,ishome:false,title:"Product",hideIcon:false, 
     itemsInCart:localStorage.getItem('cartlength')};
     this.getdata(this.cat_id);
+
   } 
 
   ShowLoader() 
@@ -137,9 +157,14 @@ public mservice:SellerProductService, public loadingCtrl: LoadingController)
 
   addToCart(item, index){
     item.quantityInCart += 1;
-    this.itemsInCart.push(item);    
+    this.itemsInCart.push(item);   
+    console.log(JSON.stringify(this.itemsInCart))
+ 
     var clength = this.itemsInCart.length; 
-    localStorage.setItem("cartlength", clength.toString())   
+    localStorage.setItem("cartlength", clength.toString())
+    localStorage.setItem("cartitem", JSON.stringify(this.itemsInCart))
+    this.cartRefresh();  
+
     if (index != -1) 
     {
         item.flag = true;
@@ -149,6 +174,14 @@ public mservice:SellerProductService, public loadingCtrl: LoadingController)
     this.changeDetector.detectChanges();
 
 }
+// Page back
+cartRefresh()
+{
+  this.header_data            = {ismenu:true,ishome:false,title:"Product",hideIcon:false, 
+                                  itemsInCart:localStorage.getItem('cartlength'),
+                                  cartitem:localStorage.getItem("cartitem")};
+ 
+}
 
 addcount(item)
 {
@@ -157,6 +190,7 @@ addcount(item)
     item.quantityInCart += 1;
     item.addButtonState = 'adding';
     this.cartBadgeState = 'adding';
+    localStorage.setItem("cartitem", JSON.stringify(this.itemsInCart))
 }
 
 removecount(item, i)
@@ -168,7 +202,9 @@ removecount(item, i)
         var index = this.itemsInCart.indexOf(item);
         this.itemsInCart.splice(index, 1);
         var clength = this.itemsInCart.length;
-        localStorage.setItem("cartlength", clength.toString())  
+        localStorage.setItem("cartlength", clength.toString());
+        localStorage.setItem("cartitem", JSON.stringify(this.itemsInCart));  
+        this.cartRefresh();
         item.flag = false;
     }
 }

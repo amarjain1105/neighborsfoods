@@ -5,79 +5,93 @@ import {RegisterPage} from "../register/register";
 import { LoginService } from "./loginService";
 import { Events } from "ionic-angular/util/events";
 import { LoadingController } from "ionic-angular/components/loading/loading-controller";
+import { OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators,ValidatorFn,AbstractControl } from '@angular/forms';
 
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html'
 })
-export class LoginPage {
+export class LoginPage  implements OnInit {
   header_data:any;
-  email:string;
-  password:string;
   loading;
+  user: FormGroup;
   constructor(public nav: NavController, public alertCtrl: AlertController, public toastCtrl: ToastController,
     public mservice: LoginService, public events: Events, public loadingCtrl: LoadingController) {
     this.header_data={ismenu:true,ishome:false,title:"Login",hideIcon:false};
   
   }
+  ngOnInit() {
 
+    this.user = new FormGroup({
+    email: new FormControl('', [Validators.email]),
+    password:new FormControl('', [])
+    });
+    
+    }
   // go to register page
   register() {
     this.nav.setRoot(RegisterPage);
   }
 
   // login and go to home page
-  login() {
-    if(this.email == "" || this.email == undefined)
+  login(user) {
+    if(user !=undefined)
     {
-      let toast = this.toastCtrl.create({
-        message: 'Enter Username / Email Id ',
-        duration: 3000,
-        position: 'bottom',
-        cssClass: 'dark-trans',
-        closeButtonText: 'OK',
-        showCloseButton: true
-      });
-      toast.present();
-    }
-    else if(this.password == "" || this.password == undefined)
-    {
-      let toast = this.toastCtrl.create({
-        message: 'Enter Password',
-        duration: 3000,
-        position: 'top',
-        cssClass: 'dark-trans',
-        closeButtonText: 'OK',
-        showCloseButton: true
-      });
-      toast.present();
-    }
-    else
-    {
-      this.ShowLoader();
-      this.mservice.getLogin(this.email,this.password).subscribe((response:any) =>
+      if(user.value.email == "" || user.value.email == undefined)
       {
-        this.HideLoader();
-        if(response.status)
+        let toast = this.toastCtrl.create({
+          message: 'Enter Username / Email Id ',
+          duration: 3000,
+          position: 'bottom',
+          cssClass: 'dark-trans',
+          closeButtonText: 'OK',
+          showCloseButton: true
+        });
+        toast.present();
+      }
+      else if(user.value.password == "" || user.value.password == undefined)
+      {
+        let toast = this.toastCtrl.create({
+          message: 'Enter Password',
+          duration: 3000,
+          position: 'top',
+          cssClass: 'dark-trans',
+          closeButtonText: 'OK',
+          showCloseButton: true
+        });
+        toast.present();
+      }
+      else
+      {
+        this.ShowLoader();
+        this.mservice.getLogin(user.value.email,user.value.password).subscribe((response:any) =>
         {
-          console.log(response.data)
-          console.log(JSON.stringify(response.data))
-          localStorage.setItem("logindata", JSON.stringify(response.data));
-          localStorage.setItem("name", response.data.name);
-          localStorage.setItem("username", response.data.username);
-          localStorage.setItem("mobile", response.data.mobile);
-          localStorage.setItem("u_id", response.data.id);
-          this.events.publish('user:login', response.data);
-          this.nav.setRoot(HomePage);
-        }
-        else
-        {
-          alert(response.message);
-        }
-      });
+          this.HideLoader();
+          if(response.status)
+          {
+            console.log(response.data)
+            console.log(JSON.stringify(response.data))
+            localStorage.setItem("logindata", JSON.stringify(response.data));
+            localStorage.setItem("name", response.data.name);
+            localStorage.setItem("username", response.data.username);
+            localStorage.setItem("mobile", response.data.mobile);
+            localStorage.setItem("u_id", response.data.id);
+            this.events.publish('user:login', response.data);
+            this.nav.setRoot(HomePage);
+          }
+          else
+          {
+            let alert = this.alertCtrl.create({
+              title:response.message,
+              buttons: ['Ok']
+            });
+            alert.present();
+          }
+        });
+      }
     }
   }
-
   forgotPass() {
     let forgot = this.alertCtrl.create({
       title: 'Forgot Password?',

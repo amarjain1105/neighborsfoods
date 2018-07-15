@@ -6,7 +6,7 @@
     <button ion-button icon-only>
         <ion-icon name="refresh"></ion-icon>
     </button>
-    <button (click)="clickCart(itemsInCart)" ion-button icon-only>
+    <button (click)="checkout()" ion-button icon-only>
         <ion-badge *ngIf="header.itemsInCart != '0'" >{{header.itemsInCart}}</ion-badge>
         <ion-icon name="cart"></ion-icon>
     </button>

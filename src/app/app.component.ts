@@ -75,7 +75,7 @@ logoutlist()
   loggedIn(data) {
     this.pages = [
       { title: 'Home', component: HomePage, icon: 'home' },
-      { title: 'Seller', component: SellerPage, icon: 'home' }
+      { title: 'Seller', component: SellerPage, icon: 'people' }
     ];
   }
 
@@ -84,7 +84,8 @@ logoutlist()
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
-      this.splashScreen.hide();
+      //setTimeout(this.splashScreen.hide(), 100)
+      this.splashScreen.hide()
     });
   }
 

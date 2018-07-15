@@ -28,8 +28,7 @@ import { AlertController } from "ionic-angular/components/alert/alert-controller
         {
           
           let alert = this.alertCtrl.create({
-            title: response.message,
-            message:'<ion-icon name="contact"></ion-icon>aa',
+            title:response.message,
             buttons: ['Ok']
           });
           alert.present();

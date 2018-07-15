@@ -14,4 +14,6 @@ export class SellerProductModel
     day:any;
     time:any;
     target:any;
+    quantityInCart:number;
+    flag:boolean;
 }

@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NavController } from 'ionic-angular';
+import { CheckoutPage } from '../checkout/checkout';
 let headerPage : HeaderPage;
 @Component({
   selector: 'page-header',
@@ -14,5 +15,9 @@ export class HeaderPage {
     }
     get header() {
       return this.header_data;
+    }
+    checkout()
+    {
+      this.navCtrl.push(CheckoutPage);
     }
 }

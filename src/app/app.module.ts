@@ -28,6 +28,7 @@ import { Network } from '@ionic-native/network';
 import { SellerProductService } from '../pages/sellersproduct/SellerproductSevice';
 import { ProductDetailPage } from '../pages/productDetail/productdetail';
 import { ProfilePage } from '../pages/profile/profile';
+import { CheckoutPage } from '../pages/checkout/checkout';
 @NgModule({
   declarations: [
     MyApp,
@@ -39,7 +40,8 @@ import { ProfilePage } from '../pages/profile/profile';
     HeaderPage,
     ProductDetailPage,
     CartPage,
-    ProfilePage
+    ProfilePage,
+    CheckoutPage
   ],
   imports: [
     BrowserModule,
@@ -61,7 +63,7 @@ import { ProfilePage } from '../pages/profile/profile';
     HeaderPage,
     ProductDetailPage,
     CartPage,
-    ProfilePage
+    ProfilePage,CheckoutPage
   ],
   providers: [
     StatusBar,

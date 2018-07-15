@@ -5,6 +5,7 @@ import {HomePage} from "../home/home";
 import { RegisterService } from "./registerService";
 import { ToastController } from "ionic-angular/components/toast/toast-controller";
 import { LoadingController } from "ionic-angular/components/loading/loading-controller";
+import { AlertController } from "ionic-angular/components/alert/alert-controller";
 
 @Component({
   selector: 'page-register',
@@ -19,7 +20,7 @@ export class RegisterPage {
   rfullname:string;
   loading;
   constructor(public nav: NavController,public toastCtrl: ToastController,private mservice: RegisterService,
-    public loadingCtrl: LoadingController) 
+    public loadingCtrl: LoadingController,public alertCtrl:AlertController) 
   {
     this.header_data={ismenu:true,ishome:false,title:"Registration",hideIcon:false};
   }
@@ -48,12 +49,24 @@ export class RegisterPage {
         console.log(response);
         if(response.status)
         {
-          alert(response.message);
+          let toast = this.toastCtrl.create({
+            message: response.message,
+            duration: 3000,
+            position: 'bottom',
+            cssClass: 'dark-trans',
+            closeButtonText: 'OK',
+            showCloseButton: true
+          });
+          toast.present();
           this.nav.setRoot(LoginPage);
         }
         else
         {
-          alert(response.message);
+          let alert = this.alertCtrl.create({
+            title: response.message,
+            buttons: ['Ok']
+          });
+          alert.present();
         }
       });
     }
