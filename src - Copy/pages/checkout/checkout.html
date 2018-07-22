@@ -1,0 +1,45 @@
+<ion-header>
+        <ion-navbar color="primary">
+          <ion-title>Checkout</ion-title>
+        </ion-navbar>
+      </ion-header>
+      
+        <ion-content padding >
+            <div>
+                <p>Total (  {{cartlength}}  ) =
+                    <strong>$240</strong>
+                </p>
+            </div>
+            <button (click)="checkout()"  class="button button-stable button-clear button-block button-small" ion-button >Check Out</button>
+                
+                <div *ngFor="let item of cartitemarr"   >
+                    <ion-list>
+                        <ion-card>
+                            <ion-item-divider style="background:rgb(243, 240, 240)"><strong>{{item.p_name}} </strong> </ion-item-divider>
+                            <ion-item>
+                                <img height="50%"  width="50%"  src="{{api_url}}/{{item.target}}/{{item.p_image}}" class="img-responsive img-box img-thumbnail"> 
+                                <form class="ion-list"></form>
+                                <div>
+                                    <p>{{item.quantityInCart}} x {{item.p_price}}=
+                                        <strong>${{item.quantityInCart}}*  {{item.p_price}} </strong>
+                                    </p>
+                                </div>
+                                <div class="button-bar">
+                                    <button color="danger" (click)="removeFromCart(item)" ion-button >
+                                        <ion-icon ios="ios-trash" md="md-trash"></ion-icon>
+                                    </button>
+                                    <button  ion-button (click)="inc(item)"><ion-icon name="add"></ion-icon></button>
+                                    <button ion-button>{{item.quantityInCart}}</button>
+                                    <button ion-button (click)="dec(item)" ><ion-icon name="remove"></ion-icon></button>
+                                </div>
+                            </ion-item>
+                        </ion-card>
+                    </ion-list>
+                </div>
+                
+        
+                
+                
+                
+                
+      </ion-content>

@@ -46,14 +46,17 @@ import { ProfilePage } from '../profile/profile';
 //     ])
 // ]
 })
+
+
 export class SellerProductPage {
   header_data:any;
   items: Object[] = []
   itemsInCart: Object[] = [];
+  tempitemsInCart:Object[] = [];
   cartBadgeState: string = 'idle';
   api_url: string = URL_BASE;
   cat_id:any; 
-  sellerproductList:any;
+  sellerproductList=[];
   loading;
   refresher;
   constructor(public navCtrl: NavController,public modalCtrl:ModalController, private changeDetector: ChangeDetectorRef,public navParams: NavParams,
@@ -63,17 +66,13 @@ public mservice:SellerProductService, public loadingCtrl: LoadingController)
                                     itemsInCart:localStorage.getItem('cartlength')};
       this.cat_id = navParams.get('param1');
   }
-  ionViewDidLoad() 
-  {
-    
-    //console.log(this.itemsInCart)
-  }
 
   getdata(cat_id)
-  { 
+  {
     this.ShowLoader();
     this.mservice.getSellerProductList(cat_id).subscribe((response:any)=>
     {
+      console.log(response)
       this.HideLoader();
       if(this.refresher != undefined)
         this.refresher.complete();
@@ -104,35 +103,35 @@ public mservice:SellerProductService, public loadingCtrl: LoadingController)
         }
         this.sellerproductList = modelArray;
       }
-      this.itemsInCart = JSON.parse(localStorage.getItem('cartitem'));
-      console.log(this.itemsInCart);
-      for(var i=0; i<this.itemsInCart.length; i++)
+      else
       {
-        for(var j=0; j<modelArray.length;j++)
-        {
-          if(this.itemsInCart[i]['p_code'] == modelArray[j]['p_code'])
-          {
-            console.log(modelArray[j]['p_code'])
-            modelArray[j]['quantityInCart'] = this.itemsInCart[i]['quantityInCart']
-            modelArray[j]['flag'] = true;
-          }
-        }
+        this.sellerproductList = [];
+        console.log(this.sellerproductList.length);
       }
     });
   }
-  doRefresh(refresher) 
-  {
-    this.getdata(this.cat_id);
-    this.refresher = refresher;
-  }
-
+  
   ionViewCanEnter()
   {
     this.header_data            = {ismenu:true,ishome:false,title:"Product",hideIcon:false, 
     itemsInCart:localStorage.getItem('cartlength')};
     this.getdata(this.cat_id);
 
+   /* var item_cart = JSON.parse(localStorage.getItem('cartitem'));
+    this.itemsInCart = [];
+    for(var i =0 ; i< item_cart.length; i++)
+    {
+      this.itemsInCart.push(item_cart[i])
+    }*/
   } 
+
+ 
+  
+  doRefresh(refresher) 
+  {
+    this.getdata(this.cat_id);
+    this.refresher = refresher;
+  }
 
   ShowLoader() 
   {
@@ -156,7 +155,7 @@ public mservice:SellerProductService, public loadingCtrl: LoadingController)
   
 
   addToCart(item, index){
-    item.quantityInCart += 1;
+    item.quantityInCart = 1;
     this.itemsInCart.push(item);   
     console.log(JSON.stringify(this.itemsInCart))
  
@@ -181,32 +180,6 @@ cartRefresh()
                                   itemsInCart:localStorage.getItem('cartlength'),
                                   cartitem:localStorage.getItem("cartitem")};
  
-}
-
-addcount(item)
-{
-    console.log(item);
-    console.log(this.itemsInCart[0]);
-    item.quantityInCart += 1;
-    item.addButtonState = 'adding';
-    this.cartBadgeState = 'adding';
-    localStorage.setItem("cartitem", JSON.stringify(this.itemsInCart))
-}
-
-removecount(item, i)
-{
-    item.quantityInCart -= 1;
-    if(item.quantityInCart == 0)
-    {
-        
-        var index = this.itemsInCart.indexOf(item);
-        this.itemsInCart.splice(index, 1);
-        var clength = this.itemsInCart.length;
-        localStorage.setItem("cartlength", clength.toString());
-        localStorage.setItem("cartitem", JSON.stringify(this.itemsInCart));  
-        this.cartRefresh();
-        item.flag = false;
-    }
 }
 
 addToCartFinished(item){

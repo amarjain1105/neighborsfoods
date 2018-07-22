@@ -40,6 +40,7 @@ export class SellerPage {
             var model                   = new SellerModel();
             model.seller_id             = response.data[i]['seller_id'];
             model.seller_name           = response.data[i]['seller_name'];
+            model.seller_address        = response.data[i]['seller_address'];
             model.seller_status         = response.data[i]['seller_status'];
             model.seller_profile_image  = response.data[i]['seller_profile_image'];
             model.seller_user_email     = response.data[i]['seller_user_email'];
@@ -53,8 +54,11 @@ export class SellerPage {
     });
   }
   sellerproduct(data)
-  {
-    this.navCtrl.push(SellerProductPage);
+  {console.log(data);
+    
+    this.navCtrl.push(SellerProductPage, {
+      param1: data.seller_user_email
+  });
   }
 
   doRefresh(refresher) 
