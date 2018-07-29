@@ -28,6 +28,12 @@ import { SellerProductService } from '../pages/sellersproduct/SellerproductSevic
 import { ProductDetailPage } from '../pages/productDetail/productdetail';
 import { ProfilePage } from '../pages/profile/profile';
 import { CheckoutPage } from '../pages/checkout/checkout';
+import { GroupPage } from '../pages/group/group';
+import { ChatPage } from '../pages/chat/chat';
+import { AdMobPro } from '@ionic-native/admob-pro';
+import { LazyLoadImageModule } from 'ng2-lazyload-image';
+import { GroupService } from '../pages/group/groupService';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -39,12 +45,15 @@ import { CheckoutPage } from '../pages/checkout/checkout';
     ProductDetailPage,
     CartPage,
     ProfilePage,
-    CheckoutPage
+    CheckoutPage,
+    GroupPage,
+    ChatPage
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     HttpModule,
+    LazyLoadImageModule,
     IonicModule.forRoot(MyApp),
     BrowserModule,
     BrowserAnimationsModule,
@@ -60,7 +69,10 @@ import { CheckoutPage } from '../pages/checkout/checkout';
     HeaderPage,
     ProductDetailPage,
     CartPage,
-    ProfilePage,CheckoutPage
+    ProfilePage,
+    CheckoutPage,
+    GroupPage,
+    ChatPage
   ],
   providers: [
     StatusBar,
@@ -70,7 +82,9 @@ import { CheckoutPage } from '../pages/checkout/checkout';
     ApiService,
     HomeService,
     SellerService,
+    GroupService,
     Network,
+    AdMobPro,
     SellerProductService,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]

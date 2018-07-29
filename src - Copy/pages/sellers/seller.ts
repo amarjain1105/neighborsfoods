@@ -55,7 +55,7 @@ export class SellerPage {
   }
   sellerproduct(data)
   {console.log(data);
-    alert();
+    
     this.navCtrl.push(SellerProductPage, {
       param1: data.seller_user_email
   });

@@ -1,0 +1,53 @@
+<ion-header>
+    <page-header [header]="header_data"></page-header>
+    <ion-segment [(ngModel)]="section" color="primery">
+      <ion-segment-button value="one">
+        All Group
+      </ion-segment-button>
+      <ion-segment-button value="two">
+        Joined Group
+      </ion-segment-button>
+    </ion-segment>
+</ion-header>
+<ion-content>
+
+    <div [ngSwitch]="section" color='primery'>
+ 
+        <ion-list *ngSwitchCase="'one'">
+            <button ion-button icon-start block color="dark" tappable (click)="createGroup()">
+                <ion-icon name="log-in"></ion-icon>
+               Create Group
+              </button>
+              <ion-card *ngFor="let something of somethings">
+                <ion-item >
+                <ion-thumbnail item-left>
+                <img src="https://avatars.io/instagram/unknown">
+                </ion-thumbnail>
+                <h2>Something1</h2>
+                <ion-avatar item-end>
+                    <button ion-button >
+                        Join Group
+                    </button>
+                  </ion-avatar>
+            </ion-item>
+          </ion-card>
+
+        </ion-list>
+   
+       
+        <ion-list *ngSwitchCase="'two'">
+          <ion-card *ngFor="let something of somethings">
+            <ion-item (click)="openChat(something)">
+              <h2>Finn</h2>
+              <ion-avatar item-end>
+                  <button ion-button>
+                      <ion-icon name="ios-bookmark"></ion-icon>
+                  </button>
+                </ion-avatar>
+            </ion-item>
+          </ion-card>
+        </ion-list>
+      </div>
+
+
+</ion-content>

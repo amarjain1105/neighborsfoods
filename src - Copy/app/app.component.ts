@@ -11,6 +11,7 @@ import { CartPage } from '../pages/cart/cart';
 import { Events } from 'ionic-angular/util/events';
 import { SellerPage } from '../pages/sellers/seller';
 import { ProfilePage } from '../pages/profile/profile';
+import { GroupPage } from '../pages/group/group';
 
 
 @Component({
@@ -74,7 +75,8 @@ logoutlist()
   loggedIn(data) {
     this.pages = [
       { title: 'Home', component: HomePage, icon: 'home' },
-      { title: 'Chefs', component: SellerPage, icon: 'people' }
+      { title: 'Chefs', component: SellerPage, icon: 'people' },
+      { title: 'Group', component: GroupPage, icon: 'people' }
     ];
   }
 
@@ -83,7 +85,7 @@ logoutlist()
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
-      //setTimeout(this.splashScreen.hide(), 100)
+      // setTimeout(this.splashScreen.hide(), 100)
       this.splashScreen.hide()
     });
   }

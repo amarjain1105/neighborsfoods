@@ -10,6 +10,7 @@ import { LoadingController } from 'ionic-angular/components/loading/loading-cont
 import { ProductDetailPage } from '../productDetail/productdetail';
 import { ModalController } from 'ionic-angular/components/modal/modal-controller';
 import { ProfilePage } from '../profile/profile';
+import { AdMobPro } from '@ionic-native/admob-pro';
 
 @Component({
   selector: 'page-sellersproduct',
@@ -59,12 +60,14 @@ export class SellerProductPage {
   sellerproductList=[];
   loading;
   refresher;
+  noDataFlag = true; 
   constructor(public navCtrl: NavController,public modalCtrl:ModalController, private changeDetector: ChangeDetectorRef,public navParams: NavParams,
-public mservice:SellerProductService, public loadingCtrl: LoadingController) 
+public mservice:SellerProductService, public loadingCtrl: LoadingController,public AdMob: AdMobPro) 
   {
     this.header_data            = {ismenu:true,ishome:false,title:"Product",hideIcon:false, 
                                     itemsInCart:localStorage.getItem('cartlength')};
       this.cat_id = navParams.get('param1');
+      this.showBanner();
   }
 
   getdata(cat_id)
@@ -102,11 +105,19 @@ public mservice:SellerProductService, public loadingCtrl: LoadingController)
             modelArray.push(model);
         }
         this.sellerproductList = modelArray;
+        if(this.sellerproductList.length > 0)
+          this.noDataFlag = false;
       }
       else
       {
         this.sellerproductList = [];
         console.log(this.sellerproductList.length);
+      }
+      var item_cart = JSON.parse(localStorage.getItem('cartitem'));
+      this.itemsInCart = [];
+      for(var i =0 ; i< item_cart.length; i++)
+      {
+        this.itemsInCart.push(item_cart[i])
       }
     });
   }
@@ -116,13 +127,6 @@ public mservice:SellerProductService, public loadingCtrl: LoadingController)
     this.header_data            = {ismenu:true,ishome:false,title:"Product",hideIcon:false, 
     itemsInCart:localStorage.getItem('cartlength')};
     this.getdata(this.cat_id);
-
-   /* var item_cart = JSON.parse(localStorage.getItem('cartitem'));
-    this.itemsInCart = [];
-    for(var i =0 ; i< item_cart.length; i++)
-    {
-      this.itemsInCart.push(item_cart[i])
-    }*/
   } 
 
  
@@ -190,6 +194,19 @@ addToCartFinished(item){
 clickCart(itemsInCart)
 {
     console.log(itemsInCart);
+}
+showBanner() {
+        
+  this.AdMob.createBanner({
+      adId: 'ca-app-pub-7502977873670680/1036193776',
+      isTesting: false,
+      autoShow: true,
+      adSize:'CUSTOM',  width:300, height:50, 
+      overlap:true, 
+      // position:this.AdMob.AD_POSITION.POS_XY, x:100, y:200, 
+      position:this.AdMob.AD_POSITION.BOTTOM_CENTER
+  })
+
 }
 
 

@@ -1,4 +1,7 @@
 page-home {
+  .img-loaded + ion-spinner {
+    display:none;
+  }
     .card-background-page {
 
         ion-card {
@@ -25,6 +28,4 @@ page-home {
       
       }
 }
-.img-container{
-    height:200px;
-}
+

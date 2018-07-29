@@ -46,6 +46,8 @@ import { ProfilePage } from '../profile/profile';
 //     ])
 // ]
 })
+
+
 export class SellerProductPage {
   header_data:any;
   items: Object[] = []
@@ -66,7 +68,7 @@ public mservice:SellerProductService, public loadingCtrl: LoadingController)
   }
 
   getdata(cat_id)
-  { alert(cat_id);
+  {
     this.ShowLoader();
     this.mservice.getSellerProductList(cat_id).subscribe((response:any)=>
     {
@@ -75,7 +77,7 @@ public mservice:SellerProductService, public loadingCtrl: LoadingController)
       if(this.refresher != undefined)
         this.refresher.complete();
       if(response.status)
-      { alert('if');
+      {
         var modelArray              = new Array<SellerProductModel>();
         for(var i = 0; i< response.data.length; i++)
         {
@@ -100,50 +102,35 @@ public mservice:SellerProductService, public loadingCtrl: LoadingController)
             modelArray.push(model);
         }
         this.sellerproductList = modelArray;
-        alert(modelArray.length);
       }
       else
-      { alert('else');
+      {
         this.sellerproductList = [];
         console.log(this.sellerproductList.length);
       }
-      // this.tempitemsInCart = JSON.parse(localStorage.getItem('cartitem'));
-      // console.log(this.tempitemsInCart);
-      // for(var i=0; i<this.tempitemsInCart.length; i++)
-      // {
-      //   for(var j=0; j<modelArray.length;j++)
-      //   {
-      //     if(this.tempitemsInCart[i]['p_code'] == modelArray[j]['p_code'])
-      //     {
-      //       console.log(modelArray[j]['p_code'])
-      //       modelArray[j]['quantityInCart'] = this.tempitemsInCart[i]['quantityInCart']
-      //       modelArray[j]['flag'] = true;
-      //       this.itemsInCart.push(modelArray[j]);
-
-      //     }
-      //   }
-      // }
+      var item_cart = JSON.parse(localStorage.getItem('cartitem'));
+      this.itemsInCart = [];
+      for(var i =0 ; i< item_cart.length; i++)
+      {
+        this.itemsInCart.push(item_cart[i])
+      }
     });
   }
-  doRefresh(refresher) 
-  {
-    this.getdata(this.cat_id);
-    this.refresher = refresher;
-  }
-
+  
   ionViewCanEnter()
   {
     this.header_data            = {ismenu:true,ishome:false,title:"Product",hideIcon:false, 
     itemsInCart:localStorage.getItem('cartlength')};
     this.getdata(this.cat_id);
-
-    var item_cart = JSON.parse(localStorage.getItem('cartitem'));
-    this.itemsInCart = [];
-    for(var i =0 ; i< item_cart.length; i++)
-    {
-      this.itemsInCart.push(item_cart[i])
-    }
   } 
+
+ 
+  
+  doRefresh(refresher) 
+  {
+    this.getdata(this.cat_id);
+    this.refresher = refresher;
+  }
 
   ShowLoader() 
   {

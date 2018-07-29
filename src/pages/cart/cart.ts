@@ -2,6 +2,7 @@ import { Component, ChangeDetectorRef } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { ItemModel } from './Itemodel';
+import { AdMobPro } from '@ionic-native/admob-pro';
 
 
 @Component({
@@ -45,7 +46,7 @@ export class CartPage {
     itemsInCart: Object[] = [];
     cartBadgeState: string = 'idle';
 
-    constructor(private navCtrl: NavController, private changeDetector: ChangeDetectorRef) {
+    constructor(private navCtrl: NavController, private changeDetector: ChangeDetectorRef, public AdMob:AdMobPro) {
 
         var modelArray = new Array<ItemModel>();
         for(var i = 0; i< 10; i++)
@@ -59,6 +60,8 @@ export class CartPage {
             modelArray.push(model);
         }
         this.items = modelArray;
+
+        this.showBanner();
     }
 
     addToCart(item, index){
@@ -102,5 +105,19 @@ export class CartPage {
     {
         console.log(itemsInCart);
     }
+    showBanner() {
+        
+        this.AdMob.createBanner({
+            adId: 'ca-app-pub-7502977873670680/1036193776',
+            isTesting: false,
+            autoShow: true,
+            adSize:'CUSTOM',  width:300, height:50, 
+            overlap:true, 
+            // position:this.AdMob.AD_POSITION.POS_XY, x:100, y:200, 
+            position:this.AdMob.AD_POSITION.BOTTOM_CENTER
+        })
+    
+    }
+    
 
 }

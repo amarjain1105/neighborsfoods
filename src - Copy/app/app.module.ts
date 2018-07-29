@@ -28,6 +28,8 @@ import { SellerProductService } from '../pages/sellersproduct/SellerproductSevic
 import { ProductDetailPage } from '../pages/productDetail/productdetail';
 import { ProfilePage } from '../pages/profile/profile';
 import { CheckoutPage } from '../pages/checkout/checkout';
+import { GroupPage } from '../pages/group/group';
+import { ChatPage } from '../pages/chat/chat';
 @NgModule({
   declarations: [
     MyApp,
@@ -39,7 +41,9 @@ import { CheckoutPage } from '../pages/checkout/checkout';
     ProductDetailPage,
     CartPage,
     ProfilePage,
-    CheckoutPage
+    CheckoutPage,
+    GroupPage,
+    ChatPage
   ],
   imports: [
     BrowserModule,
@@ -60,7 +64,10 @@ import { CheckoutPage } from '../pages/checkout/checkout';
     HeaderPage,
     ProductDetailPage,
     CartPage,
-    ProfilePage,CheckoutPage
+    ProfilePage,
+    CheckoutPage,
+    GroupPage,
+    ChatPage
   ],
   providers: [
     StatusBar,

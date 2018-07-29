@@ -9,9 +9,9 @@
         <ion-avatar item-start (click)="productdetail(item)">
           <img  src="{{api_url}}/{{item.target}}/{{item.p_image}}" style="width: 63px;height: 63px;">
         </ion-avatar>
-        <h4 style="font-weight:bolder">{{item.p_name}} | <span *ngIf="item.p_status == 'active'" style="color: green">online</span><span *ngIf="item.p_status == 'deactive'" style="color: red">offline</span></h4>
-        <h3><i class="fa fa-rupee"></i>{{item.p_price}}</h3>
-        <p>I've had a pretty messed up day. If we just...</p>
+        <h4 style="font-weight:bolder">{{item.p_name}} | <i class="fa fa-rupee"></i>{{item.p_price}} | <span *ngIf="item.p_status == 'active'" style="color: green">online</span><span *ngIf="item.p_status == 'deactive'" style="color: red">offline</span></h4>
+        <h3>Address</h3>
+        <p style = "cursor: pointer;" color="primary" (click)="productdetail(item)"> view detail</p>
         <ion-avatar item-end>
           <button ion-button clear (click)="addToCart(item, i)">
             <ion-icon ios="ios-cart" md="md-cart"></ion-icon>
@@ -20,7 +20,7 @@
       </ion-item>
     </ion-card>
   </span>
-  <span *ngIf="sellerproductList != undefined && sellerproductList.length == 0">
+  <span *ngIf="sellerproductList != undefined && sellerproductList.length == 0" [hidden]="noDataFlag">
     <ion-card class="no-data">
       NO DATA
     </ion-card>
@@ -62,7 +62,8 @@
   </ion-list>-->
   
 </ion-content>
-
+<ion-footer style="height: 50px;">
+</ion-footer>
 
 
 

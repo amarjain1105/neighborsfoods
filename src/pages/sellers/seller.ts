@@ -6,6 +6,7 @@ import { SellerService } from './sellerService';
 import { SellerModel } from './sellerModel';
 import { URL_BASE } from '../api/config';
 import { LoadingController } from 'ionic-angular/components/loading/loading-controller';
+import { AdMobPro } from '@ionic-native/admob-pro';
 //import { HeaderPage } from '../header/header';
 //import { AboutPage } from '../about/about';
 
@@ -20,8 +21,10 @@ export class SellerPage {
   loading;
   refresher;
   constructor(public navCtrl: NavController,public navParams: NavParams,public mservice:SellerService,
-    public loadingCtrl: LoadingController) {
-    this.header_data={ismenu:true, ishome:false, title:"Seller", hideIcon:false};
+    public loadingCtrl: LoadingController,public AdMob: AdMobPro) 
+  {
+    this.header_data = {ismenu:true, ishome:false, title:"Seller", hideIcon:false, 
+                    itemsInCart:localStorage.getItem('cartlength')};
     //console.log(this.cat_id);
   }
   getdata()
@@ -83,5 +86,18 @@ export class SellerPage {
   HideLoader()
   {
       this.loading.dismiss();
+  }
+  showBanner() {
+        
+    this.AdMob.createBanner({
+        adId: 'ca-app-pub-7502977873670680/1036193776',
+        isTesting: false,
+        autoShow: true,
+        adSize:'CUSTOM',  width:300, height:50, 
+        overlap:true, 
+        // position:this.AdMob.AD_POSITION.POS_XY, x:100, y:200, 
+        position:this.AdMob.AD_POSITION.BOTTOM_CENTER
+    })
+  
   }
 }

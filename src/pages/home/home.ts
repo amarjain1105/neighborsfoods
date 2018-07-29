@@ -7,7 +7,7 @@ import { URL_BASE } from '../api/config';
 import { LoadingController } from 'ionic-angular/components/loading/loading-controller';
 import { Network } from '@ionic-native/network';
 import { SellerProductPage } from '../sellersproduct/sellersproduct';
-
+import { AdMobPro } from '@ionic-native/admob-pro';
 
 @Component({
   selector: 'page-home',
@@ -20,7 +20,7 @@ export class HomePage {
   loading;
   refresher;
   constructor(public navCtrl: NavController, public mservisecat: HomeService, public loadingCtrl:LoadingController, 
-    public network: Network) 
+    public network: Network,public AdMob:AdMobPro) 
   {
     this.header_data            = {ismenu:true,ishome:false,title:"Home",hideIcon:false, 
                                     itemsInCart:localStorage.getItem('cartlength')};
@@ -58,7 +58,7 @@ export class HomePage {
 
   seller(data)
   {
-    this.showRewardVideoAds();
+    //this.showRewardVideoAds();
     this.navCtrl.push(SellerProductPage, {
       param1: data.cat_id
   });
@@ -109,18 +109,32 @@ export class HomePage {
   // admob code
 
   showBanner() {
- 
-    
+        
+    this.AdMob.createBanner({
+        adId: 'ca-app-pub-7502977873670680/1036193776',
+        isTesting: false,
+        autoShow: true,
+        adSize:'CUSTOM',  width:300, height:50, 
+        overlap:true, 
+        // position:this.AdMob.AD_POSITION.POS_XY, x:100, y:200, 
+        position:this.AdMob.AD_POSITION.BOTTOM_CENTER
+    })
 
 }
 
 launchInterstitial() {
 
-    
+  this.AdMob.prepareInterstitial({
+    adId: 'ca-app-pub-7502977873670680/7318106062',
+    autoShow: true
+  })
 
 }
 
 showRewardVideoAds(){
- 
+  this.AdMob.prepareRewardVideoAd({
+    adId: 'ca-app-pub-7502977873670680/6910486927',
+    autoShow: true
+  })
 }
 }

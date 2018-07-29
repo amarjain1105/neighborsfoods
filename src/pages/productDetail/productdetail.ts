@@ -8,6 +8,7 @@ import { ViewController } from "ionic-angular/navigation/view-controller";
 import { NavParams } from "ionic-angular/navigation/nav-params";
 import { SellerProductModel } from "../sellersproduct/SellerproductModel";
 import { URL_BASE } from "../api/config";
+import { AdMobPro } from "@ionic-native/admob-pro";
 
 @Component({
   selector: 'page-productdetail',
@@ -17,7 +18,10 @@ export class ProductDetailPage {
   header_data:any;
   api_url: string = URL_BASE;
   model                   = new SellerProductModel();
-  constructor(public navCtrl: NavController, public viewCtrl : ViewController ,public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public viewCtrl : ViewController ,public navParams: NavParams
+    , public AdMob: AdMobPro) {
+  
+    this.showBanner();
   }
   public closeModal(){
       this.viewCtrl.dismiss();
@@ -38,5 +42,19 @@ export class ProductDetailPage {
     this.model.time              = this.navParams.get('time');
     this.model.target            = this.navParams.get('target');
     console.log('ionViewDidLoad ModalPage');
+}
+
+showBanner() {
+        
+  this.AdMob.createBanner({
+      adId: 'ca-app-pub-7502977873670680/1036193776',
+      isTesting: false,
+      autoShow: true,
+      adSize:'CUSTOM',  width:300, height:50, 
+      overlap:true, 
+      // position:this.AdMob.AD_POSITION.POS_XY, x:100, y:200, 
+      position:this.AdMob.AD_POSITION.BOTTOM_CENTER
+  })
+
 }
 }

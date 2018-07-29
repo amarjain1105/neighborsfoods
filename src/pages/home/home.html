@@ -1,18 +1,20 @@
 <ion-header><page-header [header]="header_data"></page-header></ion-header>
-<ion-content class="card-background-page">
+<ion-content class="card-background-page" #container>
   <ion-refresher (ionRefresh)="doRefresh($event)">
       <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
   <ion-row *ngFor="let item of category_item">
     <ion-card style="margin-left: 10px;margin-top: 2px;margin-bottom: 5px;" (click)="seller(item)"> 
+        <!-- <img [defaultImage]="'https://www.placecage.com/1000/1000'" [lazyLoad]="'https://images.unsplash.com/photo-1443890923422-7819ed4101c0?fm=jpg'" [scrollObservable]="container.ionScroll"> -->
+
       <img src="{{api_url}}/{{item.target}}/{{item.cat_image}}" class="img-container"/>
       <div class="card-title">{{item.cat_name}}</div>
       <div class="card-subtitle">41 Listings</div>
     </ion-card>
   </ion-row>
 </ion-content>
-<!-- <ion-footer style="height: 12%;">
-</ion-footer> -->
+<ion-footer style="height: 50px;">
+</ion-footer>
 
 
 

@@ -6,6 +6,7 @@ import { RegisterService } from "./registerService";
 import { ToastController } from "ionic-angular/components/toast/toast-controller";
 import { LoadingController } from "ionic-angular/components/loading/loading-controller";
 import { AlertController } from "ionic-angular/components/alert/alert-controller";
+import { AdMobPro } from "@ionic-native/admob-pro";
 
 @Component({
   selector: 'page-register',
@@ -20,9 +21,10 @@ export class RegisterPage {
   rfullname:string;
   loading;
   constructor(public nav: NavController,public toastCtrl: ToastController,private mservice: RegisterService,
-    public loadingCtrl: LoadingController,public alertCtrl:AlertController) 
+    public loadingCtrl: LoadingController,public alertCtrl:AlertController,public AdMob: AdMobPro) 
   {
     this.header_data={ismenu:true,ishome:false,title:"Registration",hideIcon:false};
+    this.showBanner();
   }
 
   // register and go to home page
@@ -89,5 +91,18 @@ export class RegisterPage {
   HideLoader()
   {
       this.loading.dismiss();
+  }
+  showBanner() {
+        
+    this.AdMob.createBanner({
+        adId: 'ca-app-pub-7502977873670680/1036193776',
+        isTesting: false,
+        autoShow: true,
+        adSize:'CUSTOM',  width:300, height:50, 
+        overlap:true, 
+        // position:this.AdMob.AD_POSITION.POS_XY, x:100, y:200, 
+        position:this.AdMob.AD_POSITION.BOTTOM_CENTER
+    })
+  
   }
 }

@@ -7,6 +7,7 @@ import { Events } from "ionic-angular/util/events";
 import { LoadingController } from "ionic-angular/components/loading/loading-controller";
 import { OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators,ValidatorFn,AbstractControl } from '@angular/forms';
+import { AdMobPro } from "@ionic-native/admob-pro";
 
 @Component({
   selector: 'page-login',
@@ -17,8 +18,10 @@ export class LoginPage  implements OnInit {
   loading;
   user: FormGroup;
   constructor(public nav: NavController, public alertCtrl: AlertController, public toastCtrl: ToastController,
-    public mservice: LoginService, public events: Events, public loadingCtrl: LoadingController) {
+    public mservice: LoginService, public events: Events, public loadingCtrl: LoadingController
+    , public AdMob: AdMobPro) {
     this.header_data={ismenu:true,ishome:false,title:"Login",hideIcon:false};
+    this.showBanner();
   
   }
   ngOnInit() {
@@ -42,7 +45,7 @@ export class LoginPage  implements OnInit {
       {
         let toast = this.toastCtrl.create({
           message: 'Enter Username / Email Id ',
-          duration: 3000,
+          duration: 2000,
           position: 'bottom',
           cssClass: 'dark-trans',
           closeButtonText: 'OK',
@@ -114,20 +117,10 @@ export class LoginPage  implements OnInit {
           text: 'Send',
           handler: data => {
             console.log('Send clicked');
-           var error_message="";
-            this.mservice.getforgotpassword(data.email).subscribe((response:any)=>
+            if(data.email =="")
             {
-              if(response.status)
-              {
-                error_message = response.message; 
-              }
-              else
-              {
-                error_message = response.message;
-              }
-
               let toast = this.toastCtrl.create({
-                message: error_message,
+                message: "Enter valid email address",
                 duration: 3000,
                 position: 'bottom',
                 cssClass: 'dark-trans',
@@ -135,7 +128,33 @@ export class LoginPage  implements OnInit {
                 showCloseButton: true
               });
               toast.present();
-            });
+              return false;
+            }
+            else
+            {
+              var error_message="";
+                this.mservice.getforgotpassword(data.email).subscribe((response:any)=>
+                {
+                  if(response.status)
+                  {
+                    error_message = response.message; 
+                  }
+                  else
+                  {
+                    error_message = response.message;
+                  }
+
+                  let toast = this.toastCtrl.create({
+                    message: error_message,
+                    duration: 3000,
+                    position: 'bottom',
+                    cssClass: 'dark-trans',
+                    closeButtonText: 'OK',
+                    showCloseButton: true
+                  });
+                  toast.present();
+                });
+            }
             
           }
         }
@@ -156,5 +175,18 @@ export class LoginPage  implements OnInit {
   {
       this.loading.dismiss();
   }
+  showBanner() {
+        
+    this.AdMob.createBanner({
+        adId: 'ca-app-pub-7502977873670680/1036193776',
+        isTesting: false,
+        autoShow: true,
+        adSize:'CUSTOM',  width:300, height:50, 
+        overlap:true, 
+        // position:this.AdMob.AD_POSITION.POS_XY, x:100, y:200, 
+        position:this.AdMob.AD_POSITION.BOTTOM_CENTER
+    })
+
+}
 
 }

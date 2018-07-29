@@ -1,0 +1,58 @@
+<ion-header>
+    <page-header [header]="header_data"></page-header>
+    <ion-segment [(ngModel)]="section" color="primery">
+      <ion-segment-button value="one">
+        All Group
+      </ion-segment-button>
+      <ion-segment-button value="two">
+        Joined Group
+      </ion-segment-button>
+    </ion-segment>
+</ion-header>
+<ion-content>
+
+    <div [ngSwitch]="section" color='primery'>
+ 
+        <ion-list *ngSwitchCase="'one'">
+            <button ion-button icon-start block color="dark" tappable (click)="createGroup()">
+                <ion-icon name="log-in"></ion-icon>
+               Create Group
+              </button>
+              <ion-card *ngFor="let something of items">
+                <ion-item >
+                <ion-thumbnail item-left>
+                    <img  src="../assets/user.png" style="width: 63px;height: 55px;">
+                </ion-thumbnail>
+                <h2>{{something.g_name}}</h2>
+                <ion-avatar item-end *ngIf="something.u_email != username">
+                    <button ion-button (click)="addGroup(something)">
+                      <ion-icon ios="ios-add" md="md-add"></ion-icon>
+                    </button>
+                </ion-avatar>
+                <ion-avatar item-end *ngIf="something.u_email == username">
+                  <button color="danger" ion-button (click)="deleteGroup(something)">
+                    <ion-icon ios="ios-trash" md="md-trash"></ion-icon>
+                  </button>
+              </ion-avatar>
+            </ion-item>
+          </ion-card>
+
+        </ion-list>
+   
+       
+        <ion-list *ngSwitchCase="'two'">
+          <ion-card *ngFor="let something of joinGrouplist">
+            <ion-item (click)="openChat(something)">
+              <h2>{{something.g_name}}</h2>
+              <ion-avatar item-end>
+                  <button ion-button>
+                      <ion-icon name="ios-bookmark"></ion-icon>
+                  </button>
+                </ion-avatar>
+            </ion-item>
+          </ion-card>
+        </ion-list>
+      </div>
+</ion-content>
+<ion-footer style="height: 50px;">
+</ion-footer>

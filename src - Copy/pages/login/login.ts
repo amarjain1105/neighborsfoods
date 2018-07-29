@@ -42,7 +42,7 @@ export class LoginPage  implements OnInit {
       {
         let toast = this.toastCtrl.create({
           message: 'Enter Username / Email Id ',
-          duration: 3000,
+          duration: 2000,
           position: 'bottom',
           cssClass: 'dark-trans',
           closeButtonText: 'OK',
@@ -114,20 +114,10 @@ export class LoginPage  implements OnInit {
           text: 'Send',
           handler: data => {
             console.log('Send clicked');
-           var error_message="";
-            this.mservice.getforgotpassword(data.email).subscribe((response:any)=>
+            if(data.email =="")
             {
-              if(response.status)
-              {
-                error_message = response.message; 
-              }
-              else
-              {
-                error_message = response.message;
-              }
-
               let toast = this.toastCtrl.create({
-                message: error_message,
+                message: "Enter valid email address",
                 duration: 3000,
                 position: 'bottom',
                 cssClass: 'dark-trans',
@@ -135,7 +125,33 @@ export class LoginPage  implements OnInit {
                 showCloseButton: true
               });
               toast.present();
-            });
+              return false;
+            }
+            else
+            {
+              var error_message="";
+                this.mservice.getforgotpassword(data.email).subscribe((response:any)=>
+                {
+                  if(response.status)
+                  {
+                    error_message = response.message; 
+                  }
+                  else
+                  {
+                    error_message = response.message;
+                  }
+
+                  let toast = this.toastCtrl.create({
+                    message: error_message,
+                    duration: 3000,
+                    position: 'bottom',
+                    cssClass: 'dark-trans',
+                    closeButtonText: 'OK',
+                    showCloseButton: true
+                  });
+                  toast.present();
+                });
+            }
             
           }
         }

@@ -8,6 +8,7 @@ import { ViewController } from "ionic-angular/navigation/view-controller";
 import { NavParams } from "ionic-angular/navigation/nav-params";
 import { SellerProductModel } from "../sellersproduct/SellerproductModel";
 import { URL_BASE } from "../api/config";
+import { AdMobPro } from "@ionic-native/admob-pro";
 
 @Component({
   selector: 'page-checkout',
@@ -17,14 +18,22 @@ export class CheckoutPage {
     cartitemarr;
     cartlength;
     api_url: string = URL_BASE;
+    price = 0;
 
-    constructor(public navCtrl: NavController, public viewCtrl : ViewController ,public navParams: NavParams) 
+    constructor(public navCtrl: NavController, public viewCtrl : ViewController ,public navParams: NavParams
+    , public AdMob: AdMobPro) 
     {
+        this.showBanner();
     }
 
     ionViewDidLoad() 
     {
         this.cartitemarr = JSON.parse(localStorage.getItem('cartitem'));
+        for(var i = 0; i<this.cartitemarr.length; i++)
+        {
+            var price_qty = parseInt(this.cartitemarr[i]['p_price']) * parseInt(this.cartitemarr[i]['quantityInCart']);
+            this.price = this.price+price_qty;
+        }
         this.cartlength = localStorage.getItem('cartlength');
         console.log(this.cartitemarr)
     }
@@ -34,13 +43,19 @@ export class CheckoutPage {
         var index = this.cartitemarr.indexOf(item);
         this.cartitemarr.splice(index, 1);
         var clength = this.cartitemarr.length;
+        for(var i=0; i<parseInt(item.quantityInCart); i++)
+        {
+            this.price = this.price-parseInt(item.p_price);
+        }
         localStorage.setItem("cartlength", clength.toString());
         localStorage.setItem("cartitem", JSON.stringify(this.cartitemarr));
+        this.cartlength = localStorage.getItem('cartlength');
     }
 
     dec(item)
     {
         item.quantityInCart -= 1;
+        this.price = this.price-parseInt(item.p_price);
         localStorage.setItem("cartitem", JSON.stringify(this.cartitemarr));
         if(item.quantityInCart == 0)
         {
@@ -48,6 +63,8 @@ export class CheckoutPage {
             this.cartitemarr.splice(index, 1);
             var clength = this.cartitemarr.length;
             localStorage.setItem("cartlength", clength.toString());
+            localStorage.setItem("cartitem", JSON.stringify(this.cartitemarr));
+            this.cartlength = localStorage.getItem('cartlength');
             item.flag = false;
         }
     }
@@ -55,7 +72,21 @@ export class CheckoutPage {
     inc(item)
     {
         item.quantityInCart += 1;
+        this.price = this.price+parseInt(item.p_price);
         item.addButtonState = 'adding';
         localStorage.setItem("cartitem", JSON.stringify(this.cartitemarr))
+    }
+    showBanner() {
+        
+        this.AdMob.createBanner({
+            adId: 'ca-app-pub-7502977873670680/1036193776',
+            isTesting: false,
+            autoShow: true,
+            adSize:'CUSTOM',  width:300, height:50, 
+            overlap:true, 
+            // position:this.AdMob.AD_POSITION.POS_XY, x:100, y:200, 
+            position:this.AdMob.AD_POSITION.BOTTOM_CENTER
+        })
+    
     }
 }

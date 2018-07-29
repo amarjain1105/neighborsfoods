@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { CheckoutPage } from '../checkout/checkout';
+import { HomePage } from '../home/home';
 let headerPage : HeaderPage;
 @Component({
   selector: 'page-header',
@@ -19,5 +20,9 @@ export class HeaderPage {
     checkout()
     {
       this.navCtrl.push(CheckoutPage);
+    }
+    home()
+    {
+      this.navCtrl.setRoot(HomePage);
     }
 }

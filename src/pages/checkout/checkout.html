@@ -7,7 +7,7 @@
         <ion-content padding >
             <div>
                 <p>Total (  {{cartlength}}  ) =
-                    <strong>$240</strong>
+                    <strong><i class="fa fa-rupee"></i> {{price}}</strong>
                 </p>
             </div>
             <button (click)="checkout()"  class="button button-stable button-clear button-block button-small" ion-button >Check Out</button>
@@ -17,11 +17,11 @@
                         <ion-card>
                             <ion-item-divider style="background:rgb(243, 240, 240)"><strong>{{item.p_name}} </strong> </ion-item-divider>
                             <ion-item>
-                                <img height="50%"  width="50%"  src="{{api_url}}/{{item.target}}/{{item.p_image}}" class="img-responsive img-box img-thumbnail"> 
+                                <img class="img-container" src="{{api_url}}/{{item.target}}/{{item.p_image}}" > 
                                 <form class="ion-list"></form>
                                 <div>
                                     <p>{{item.quantityInCart}} x {{item.p_price}}=
-                                        <strong>${{item.quantityInCart}}*  {{item.p_price}} </strong>
+                                        <strong><i class="fa fa-rupee"></i>{{item.quantityInCart}}*  {{item.p_price}} </strong>
                                     </p>
                                 </div>
                                 <div class="button-bar">

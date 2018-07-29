@@ -9,21 +9,21 @@
 
   
   <ion-content class="common-bg">
-
-      <ion-card [ngClass]="(model.p_type_of_food=='Veg')?'ion-card-veg':'ion-card-n'">
-          <ion-card-header>
-              {{ model.p_name }}
-            </ion-card-header>
-              <img  src="{{api_url}}/{{model.target}}/{{model.p_image}}"/>
-          <ion-card-content>
-              <ion-card-title >
-                <i class="fa fa-rupee"></i>{{ model.p_price }} | {{model.p_type_of_food}}
-              </ion-card-title>
-              <p>
-                  {{model.p_description}}
-              </p>
-          </ion-card-content>
-          </ion-card>
+    <ion-card [ngClass]="(model.p_type_of_food=='Veg')?'ion-card-veg':'ion-card-n'">
+      <ion-card-header>
+        {{ model.p_name }}
+      </ion-card-header>
+      <img  src="{{api_url}}/{{model.target}}/{{model.p_image}}"/>
+      <ion-card-content>
+        <ion-card-title >
+          <i class="fa fa-rupee"></i>{{ model.p_price }} | {{model.p_type_of_food}}
+        </ion-card-title>
+        <hr>
+        <p>
+          Description : {{model.p_description}}
+        </p>
+      </ion-card-content>
+    </ion-card>
  
 
 
